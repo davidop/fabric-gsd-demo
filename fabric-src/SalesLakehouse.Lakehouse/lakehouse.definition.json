@@ -1,0 +1,9 @@
+{
+  "name": "SalesLakehouse",
+  "description": "Lakehouse for Contoso Retail sales demo",
+  "tables": [
+    { "name": "raw_sales", "format": "delta", "zone": "bronze" },
+    { "name": "sales_curated", "format": "delta", "zone": "silver" },
+    { "name": "sales_kpis", "format": "delta", "zone": "gold" }
+  ]
+}

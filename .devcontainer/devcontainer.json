@@ -1,0 +1,21 @@
+{
+  "name": "Fabric as Code + GSD Demo",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/powershell:1": {},
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": { "version": "20" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.powershell",
+        "ms-python.python",
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-azuretools.vscode-bicep"
+      ]
+    }
+  },
+  "postCreateCommand": "pip install -r requirements.txt && pwsh ./scripts/demo/00-prereqs.ps1"
+}

@@ -1,0 +1,6 @@
+OrderId,OrderDate,CustomerId,Product,Region,Quantity,UnitPrice
+10001,2026-01-05,C001,Laptop,Madrid,2,950.00
+10002,2026-01-06,C002,Monitor,Barcelona,4,220.00
+10003,2026-01-08,C003,Keyboard,Valencia,10,45.00
+10004,2026-01-10,C004,Mouse,Madrid,12,25.00
+10005,2026-01-12,C005,Docking Station,Sevilla,3,180.00

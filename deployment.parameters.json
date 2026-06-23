@@ -1,0 +1,17 @@
+{
+  "environments": {
+    "dev": {
+      "workspaceId": "${FABRIC_SOURCE_WORKSPACE_ID}",
+      "lakehouseId": "${DEV_SALES_LAKEHOUSE_ID}"
+    },
+    "test": {
+      "workspaceId": "${FABRIC_TARGET_WORKSPACE_ID}",
+      "lakehouseId": "${TEST_SALES_LAKEHOUSE_ID}"
+    }
+  },
+  "replacementTokens": {
+    "${SalesLakehouseId}": "${TEST_SALES_LAKEHOUSE_ID}",
+    "${TransformSalesNotebookId}": "${TEST_TRANSFORM_NOTEBOOK_ID}",
+    "${SalesModelId}": "${TEST_SALES_MODEL_ID}"
+  }
+}

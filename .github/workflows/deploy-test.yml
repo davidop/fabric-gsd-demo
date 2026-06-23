@@ -1,0 +1,34 @@
+name: deploy-test
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run without calling Fabric"
+        required: true
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate
+        shell: pwsh
+        run: ./scripts/validation/validate-repo.ps1
+      - name: Deploy to Fabric Test
+        shell: pwsh
+        env:
+          FABRIC_TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
+          FABRIC_CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          FABRIC_CLIENT_SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
+          FABRIC_TARGET_WORKSPACE_ID: ${{ secrets.FABRIC_TARGET_WORKSPACE_ID }}
+        run: |
+          if ('${{ inputs.dry_run }}' -eq 'true') {
+            ./scripts/fabric/deploy-bulk-import.ps1 -DryRun
+          } else {
+            ./scripts/fabric/deploy-bulk-import.ps1
+          }

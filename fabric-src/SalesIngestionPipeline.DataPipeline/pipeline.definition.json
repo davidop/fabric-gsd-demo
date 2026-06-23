@@ -1,0 +1,16 @@
+{
+  "name": "SalesIngestionPipeline",
+  "description": "Demo orchestration pipeline for sales ingestion and transformation.",
+  "parameters": {
+    "sourceFile": "sales.csv",
+    "targetLakehouse": "${SalesLakehouseId}"
+  },
+  "activities": [
+    {
+      "name": "Run TransformSales Notebook",
+      "type": "Notebook",
+      "dependsOn": [],
+      "notebook": "${TransformSalesNotebookId}"
+    }
+  ]
+}

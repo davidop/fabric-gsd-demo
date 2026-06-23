@@ -1,0 +1,6 @@
+{
+  "format": "python",
+  "entrypoint": "notebook-content.py",
+  "defaultLakehouse": "${SalesLakehouseId}",
+  "description": "Transforms raw sales CSV into curated sales KPI tables."
+}

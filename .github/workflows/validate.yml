@@ -1,0 +1,19 @@
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Fabric as Code repo
+        shell: pwsh
+        run: ./scripts/validation/validate-repo.ps1
+      - name: Python tests
+        run: |
+          python -m pip install -r requirements.txt
+          pytest -q

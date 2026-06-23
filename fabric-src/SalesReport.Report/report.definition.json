@@ -1,0 +1,11 @@
+{
+  "name": "SalesReport",
+  "description": "Placeholder report definition for demo narrative.",
+  "semanticModel": "${SalesModelId}",
+  "pages": [
+    {
+      "name": "Executive Summary",
+      "visuals": ["Revenue by Region", "Orders", "Average Order Value"]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "SalesModel",
+  "compatibilityLevel": 1605,
+  "model": {
+    "culture": "en-US",
+    "tables": [
+      {
+        "name": "Sales KPIs",
+        "columns": [
+          { "name": "Region", "dataType": "string" },
+          { "name": "TotalRevenue", "dataType": "decimal" },
+          { "name": "Orders", "dataType": "int64" },
+          { "name": "Units", "dataType": "int64" }
+        ],
+        "measures": [
+          { "name": "Revenue", "expression": "SUM('Sales KPIs'[TotalRevenue])", "formatString": "€#,0.00" },
+          { "name": "Average Order Value", "expression": "DIVIDE([Revenue], SUM('Sales KPIs'[Orders]))", "formatString": "€#,0.00" }
+        ]
+      }
+    ]
+  }
+}
