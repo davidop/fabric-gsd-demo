@@ -1,0 +1,18 @@
+{
+  "servers": {
+    "azure": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@azure/mcp@latest",
+        "server",
+        "start"
+      ],
+      "env": {
+        "AZURE_SUBSCRIPTION_ID": "6b514360-d1db-4639-8f79-ea84de62691f",
+        "AZURE_TENANT_ID": "2b160a93-6317-4d62-b081-e824d2b8fb05"
+      }
+    }
+  }
+}

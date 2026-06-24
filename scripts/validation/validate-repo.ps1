@@ -15,7 +15,7 @@ if ($itemFolders.Count -eq 0) {
 }
 
 foreach ($folder in $itemFolders) {
-    if ($folder.Name -notmatch "^[A-Za-z0-9]+\.(Lakehouse|Notebook|DataPipeline|SemanticModel|Report|Environment|Warehouse)$") {
+    if ($folder.Name -notmatch "^[A-Za-z0-9_]+\.(Lakehouse|Notebook|DataPipeline|SemanticModel|Report|Environment|Warehouse)$") {
         $failures.Add("Invalid item folder name: $($folder.Name)")
     }
 

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "30cf8061-e3d2-442d-8bce-f6f09f0c1c29",
+    "type": "SQLEndpoint",
+    "displayName": "lakehouse_fabricgsd_dev_001",
+    "description": "",
+    "workspaceId": "67a1f458-f929-473a-b454-a8107649442b"
+  },
+  {
+    "id": "661b6c11-a9b8-45a7-b20b-b0828cfbf1bb",
+    "type": "Lakehouse",
+    "displayName": "lakehouse_fabricgsd_dev_001",
+    "description": "",
+    "workspaceId": "67a1f458-f929-473a-b454-a8107649442b"
+  }
+]

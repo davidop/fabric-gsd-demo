@@ -43,28 +43,94 @@ $headers = @{ Authorization = "Bearer $token"; "Content-Type" = "application/jso
 function Build-BulkImportPayload {
     param([string]$Root)
 
-    $items = @()
-    foreach ($folder in Get-ChildItem $Root -Directory) {
-        $platform = Get-Content (Join-Path $folder.FullName ".platform") -Raw | ConvertFrom-Json
-        $parts = @()
-        foreach ($file in Get-ChildItem $folder.FullName -File | Where-Object { $_.Name -ne ".platform" }) {
+    $rootPath = (Resolve-Path $Root).Path
+    $definitionParts = @()
+    foreach ($folder in Get-ChildItem $rootPath -Directory) {
+        foreach ($file in Get-ChildItem $folder.FullName -File -Recurse -Force) {
+                    $relativePath = $file.FullName.Substring($rootPath.Length).TrimStart('\', '/').Replace('\', '/')
+            $relativePath = "/$relativePath"
+
             $content = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes((Get-Content $file.FullName -Raw)))
-            $parts += @{ path = $file.Name; payload = $content; payloadType = "InlineBase64" }
-        }
-        $items += @{
-            displayName = $platform.metadata.displayName
-            type = $platform.metadata.type
-            definition = @{ parts = $parts }
+            $definitionParts += @{ path = $relativePath; payload = $content; payloadType = "InlineBase64" }
         }
     }
-    return @{ items = $items } | ConvertTo-Json -Depth 20
+
+    return @{
+        definitionParts = $definitionParts
+        options = @{ allowPairingByName = $true }
+    } | ConvertTo-Json -Depth 20
 }
 
 $payload = Build-BulkImportPayload -Root $ItemRoot
-$uri = "$FabricApiBase/workspaces/$TargetWorkspaceId/items/import"
+$uri = "$FabricApiBase/workspaces/$TargetWorkspaceId/items/bulkImportDefinitions?beta=true"
 
 Write-Host "Calling Fabric Bulk Import endpoint..." -ForegroundColor Cyan
 Write-Host $uri
 
-$response = Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -Body $payload
-$response | ConvertTo-Json -Depth 20
+$response = Invoke-WebRequest -Method Post -Uri $uri -Headers $headers -Body $payload
+
+if ($response.StatusCode -eq 200) {
+    $body = $response.Content | ConvertFrom-Json
+    $body | ConvertTo-Json -Depth 20
+    exit 0
+}
+
+if ($response.StatusCode -eq 202) {
+    $operationIdValue = $response.Headers["x-ms-operation-id"]
+    $operationId = if ($operationIdValue -is [System.Array]) { $operationIdValue[0] } else { $operationIdValue }
+
+    $locationValue = $response.Headers.Location
+    $location = if ($locationValue -is [System.Array]) { $locationValue[0] } else { $locationValue }
+
+    Write-Host "Bulk import accepted (async)." -ForegroundColor Yellow
+    if (-not [string]::IsNullOrWhiteSpace($operationId)) {
+        Write-Host "Operation Id: $operationId"
+    }
+
+    if ([string]::IsNullOrWhiteSpace($location)) {
+        Write-Host "No location header returned to poll status. Check workspace for imported items." -ForegroundColor Yellow
+        exit 0
+    }
+
+    $maxAttempts = 30
+    for ($attempt = 1; $attempt -le $maxAttempts; $attempt++) {
+        $poll = Invoke-WebRequest -Method Get -Uri $location -Headers $headers
+
+        if ($poll.StatusCode -eq 200) {
+            $pollBody = $poll.Content | ConvertFrom-Json
+
+            if ($pollBody.PSObject.Properties.Name -contains "importItemDefinitionsDetails") {
+                $pollBody | ConvertTo-Json -Depth 20
+                exit 0
+            }
+
+            $status = if ($pollBody.PSObject.Properties.Name -contains "status") { "$($pollBody.status)" } else { "" }
+            if ($status -eq "Succeeded") {
+                Write-Host "Bulk import completed successfully." -ForegroundColor Green
+                $pollBody | ConvertTo-Json -Depth 20
+                exit 0
+            }
+
+            if ($status -eq "Failed") {
+                throw "Bulk import operation failed: $($poll.Content)"
+            }
+        }
+
+        if ($poll.StatusCode -eq 202) {
+            # Operation still running.
+        }
+
+        $retryAfter = $poll.Headers["Retry-After"]
+        $waitSeconds = 5
+        $parsedRetryAfter = 0
+        if (-not [string]::IsNullOrWhiteSpace($retryAfter) -and [int]::TryParse($retryAfter, [ref]$parsedRetryAfter)) {
+            $waitSeconds = $parsedRetryAfter
+        }
+        Start-Sleep -Seconds $waitSeconds
+    }
+
+    Write-Host "Bulk import is still running. Check workspace or rerun later to verify final state." -ForegroundColor Yellow
+    exit 0
+}
+
+throw "Unexpected bulk import response status code: $($response.StatusCode)"
