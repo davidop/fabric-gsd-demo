@@ -3,6 +3,10 @@
     {
       "id": "661b6c11-a9b8-45a7-b20b-b0828cfbf1bb",
       "rootPath": "/lakehouse_fabricgsd_dev_001.Lakehouse"
+    },
+    {
+      "id": "57fdea30-9545-481f-9677-2a770758a054",
+      "rootPath": "/nb_fabricgsd_dev_weu_001.Notebook"
     }
   ],
   "definitionParts": [
@@ -24,6 +28,16 @@
     {
       "path": "/lakehouse_fabricgsd_dev_001.Lakehouse/shortcuts.metadata.json",
       "payload": "W10=",
+      "payloadType": "InlineBase64"
+    },
+    {
+      "path": "/nb_fabricgsd_dev_weu_001.Notebook/.platform",
+      "payload": "ewogICIkc2NoZW1hIjogImh0dHBzOi8vZGV2ZWxvcGVyLm1pY3Jvc29mdC5jb20vanNvbi1zY2hlbWFzL2ZhYnJpYy9naXRJbnRlZ3JhdGlvbi9wbGF0Zm9ybVByb3BlcnRpZXMvMi4wLjAvc2NoZW1hLmpzb24iLAogICJtZXRhZGF0YSI6IHsKICAgICJ0eXBlIjogIk5vdGVib29rIiwKICAgICJkaXNwbGF5TmFtZSI6ICJuYl9mYWJyaWNnc2RfZGV2X3dldV8wMDEiCiAgfSwKICAiY29uZmlnIjogewogICAgInZlcnNpb24iOiAiMi4wIiwKICAgICJsb2dpY2FsSWQiOiAiMDc1OGEwNTQtMmE3Ny05Njc3LTQ4MWYtOTU0NTU3ZmRlYTMwIgogIH0KfQ==",
+      "payloadType": "InlineBase64"
+    },
+    {
+      "path": "/nb_fabricgsd_dev_weu_001.Notebook/notebook-content.py",
+      "payload": "IyBGYWJyaWMgbm90ZWJvb2sgc291cmNlCgojIE1FVEFEQVRBICoqKioqKioqKioqKioqKioqKioqCgojIE1FVEEgewojIE1FVEEgICAia2VybmVsX2luZm8iOiB7CiMgTUVUQSAgICAgIm5hbWUiOiAic3luYXBzZV9weXNwYXJrIgojIE1FVEEgICB9LAojIE1FVEEgICAiZGVwZW5kZW5jaWVzIjoge30KIyBNRVRBIH0KCiMgQ0VMTCAqKioqKioqKioqKioqKioqKioqKgoKIyBXZWxjb21lIHRvIHlvdXIgbmV3IG5vdGVib29rCiMgVHlwZSBoZXJlIGluIHRoZSBjZWxsIGVkaXRvciB0byBhZGQgY29kZSEKCgojIE1FVEFEQVRBICoqKioqKioqKioqKioqKioqKioqCgojIE1FVEEgewojIE1FVEEgICAibGFuZ3VhZ2UiOiAicHl0aG9uIiwKIyBNRVRBICAgImxhbmd1YWdlX2dyb3VwIjogInN5bmFwc2VfcHlzcGFyayIKIyBNRVRBIH0K",
       "payloadType": "InlineBase64"
     }
   ]

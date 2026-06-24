@@ -12,5 +12,12 @@
     "displayName": "lakehouse_fabricgsd_dev_001",
     "description": "",
     "workspaceId": "67a1f458-f929-473a-b454-a8107649442b"
+  },
+  {
+    "id": "57fdea30-9545-481f-9677-2a770758a054",
+    "type": "Notebook",
+    "displayName": "nb_fabricgsd_dev_weu_001",
+    "description": "",
+    "workspaceId": "67a1f458-f929-473a-b454-a8107649442b"
   }
 ]
