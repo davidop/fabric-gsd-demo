@@ -1,0 +1,47 @@
+{
+  "project": {
+    "name": "Stop Clicking: Fabric as Code with GSD",
+    "repository": "davidop/fabric-gsd-demo",
+    "workspaceRoot": "/workspaces/fabric-gsd-demo"
+  },
+  "workflow": {
+    "phases_enabled": true,
+    "planning_enabled": true,
+    "verification_enabled": true,
+    "execution_enabled": true,
+    "shipping_enabled": true,
+    "code_review_enabled": true,
+    "plan_review_convergence": false,
+    "mempalace_enabled": false
+  },
+  "gsd": {
+    "planning_directory": ".planning",
+    "phase_prefix": "PHASE_",
+    "use_subagents": false,
+    "auto_commit": true,
+    "commit_prefix": "[GSD]"
+  },
+  "validation": {
+    "script_path": "scripts/validation/validate-repo.ps1",
+    "item_root": "fabric-src",
+    "required_files": [
+      "docs/gsd/STATE.md",
+      "docs/gsd/PLAN.md",
+      "docs/gsd/CONTEXT.md",
+      "deployment.parameters.json"
+    ]
+  },
+  "deployment": {
+    "script_path": "scripts/fabric/deploy-bulk-import.ps1",
+    "dry_run_mode": true,
+    "parameters_file": "deployment.parameters.json"
+  },
+  "artifacts": {
+    "fabric_items": [
+      "lakehouse_fabricgsd_dev_001.Lakehouse",
+      "nb_fabricgsd_dev_weu_001.Notebook"
+    ],
+    "data_path": "data/raw",
+    "runbook_path": "docs/demo/RUNBOOK.md"
+  }
+}
